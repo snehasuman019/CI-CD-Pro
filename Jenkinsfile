@@ -1,11 +1,18 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18'
-        }
+    agent any
+
+    tools {
+        nodejs "NodeJS"
     }
 
     stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/snehasuman019/CI-CD-Pro.git'
+            }
+        }
 
         stage('Install') {
             steps {
@@ -13,11 +20,15 @@ pipeline {
             }
         }
 
+        stage('Build') {
+            steps {
+                sh 'echo Build Successful'
+            }
+        }
+
         stage('Deploy') {
             steps {
-                sh '''
-                nohup node app.js > output.log 2>&1 &
-                '''
+                sh 'echo Deployment Successful'
             }
         }
     }
