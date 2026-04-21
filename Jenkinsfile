@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18'
+        }
+    }
 
     stages {
 
@@ -12,7 +16,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                pkill node || true
                 nohup node app.js > output.log 2>&1 &
                 '''
             }
